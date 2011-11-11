@@ -3,6 +3,7 @@ from views import *
 
 urlpatterns = patterns('',
     (r'^$',index),
+    (r'^department/(\w+)$',department),
 )
 
 
