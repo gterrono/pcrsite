@@ -1,9 +1,17 @@
 <html>
   <body>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type='text/javascript'>
+      $(document).ready(function() {
+        $('ul#course').click(function() {
+          $(this).append('<ul>{% for instructor in course.instructors %}<li>{{instructor}}</li>{% endfor %}</ul>');
+        });
+      });
+    </script>
     <h1>Courses</h1>
     <ul>
       {% for course in c %}
-      <li>{{course}}</li>
+      <li id='course'>{{course}}</li>
       {% endfor %}
     </ul>
   </body>
