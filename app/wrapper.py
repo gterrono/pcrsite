@@ -8,15 +8,15 @@ class Department(object):
 
   @property
   def coursehistories(self):
-    return [CourseHistory(pcr(middle=ch['path'])) for ch in raw['histories']]
+    return [CourseHistory(pcr(middle=ch['path'])) for ch in self.raw['histories']]
 
   @property
   def courses(self):
-    return [course for ch in coursehistories for course in ch.courses]
+    return [course for ch in self.coursehistories for course in ch.courses]
 
   @property
   def instructors(self):
-    return [instructor for ch in coursehistories for instructor in ch.instructors]
+    return [instructor for ch in self.coursehistories for instructor in ch.instructors]
 
 class Course(object):
   def __init__(self, raw_course):
@@ -28,8 +28,8 @@ class Course(object):
     
   @property
   def instructors(self):
-    sections=pcr(middle=''.join(('course/',id,'/sections')))['values']
-    return [instructor['name'] for instructor in section['instructions'] for section in sections]
+    sections=pcr(middle=''.join(('course/',str(self.id),'/sections')))['values']
+    return [instructor['name'] for section in sections for instructor in section['instructors']]
 
 
 class CourseHistory(object):
@@ -37,11 +37,11 @@ class CourseHistory(object):
     self.raw = raw_coursehistory
     self.id = raw_coursehistory['id']
     self.name = raw_coursehistory['name']
-    self.aliases = raw_coursehistroy['aliases']
+    self.aliases = raw_coursehistory['aliases']
 
   @property
   def courses(self):
-    return [Course(pcr(middle=''.join(('course/',raw_course['id']))) for rawcourse in self.raw['courses']]
+    return [Course(pcr(middle=''.join(('course/',str(rawcourse['id']))))) for rawcourse in self.raw['courses']]
 
   @property
   def subtitle(self):
