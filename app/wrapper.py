@@ -21,8 +21,6 @@ class Department(object):
 class Course(object):
   def __init__(self, raw_course):
     self.raw = raw_course
-#    self.credits=raw_course['credits']
-#    self.description=raw_course['description']
     self.id=raw_course['id']
     self.name=raw_course['name']
     

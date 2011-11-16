@@ -2,16 +2,27 @@
   <body>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type='text/javascript'>
-      $(document).ready(function() {
-        $('ul#course').click(function() {
-          $(this).append('<ul>{% for instructor in course.instructors %}<li>{{instructor}}</li>{% endfor %}</ul>');
-        });
-      });
+      function toggleInsts(num){
+        var instructorList=document.getElementById('instructors'+num);
+        if(instructorList.style.display=='none'){
+          instructorList.style.display='block';
+        }
+        else {
+          instructorList.style.display='none';
+        }
+      }
+
     </script>
     <h1>Courses</h1>
     <ul>
       {% for course in c %}
-      <li id='course'>{{course}}</li>
+      <li  onclick="toggleInsts({{ forloop.counter0 }})">{{course}}
+      <ul style='display:none' id='instructors{{ forloop.counter0 }}'>
+        {% for instructor in course.instructors %}
+          <li>{{instructor}}</li>
+        {% endfor %}
+      </ul>
+    </li>
       {% endfor %}
     </ul>
   </body>
