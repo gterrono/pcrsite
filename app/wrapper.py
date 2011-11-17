@@ -3,8 +3,8 @@ from api import pcr
 class Department(object):
   def __init__(self, raw_dept):
     self.raw = raw_dept
-    self.id=raw_dept['id']
-    self.name=raw_dept['name']
+    self.id = raw_dept['id']
+    self.name = raw_dept['name']
 
   @property
   def coursehistories(self):
@@ -21,12 +21,13 @@ class Department(object):
 class Course(object):
   def __init__(self, raw_course):
     self.raw = raw_course
-    self.id=raw_course['id']
-    self.name=raw_course['name']
+    self.id = raw_course['id']
+    self.name = raw_course['name']
     
   @property
   def instructors(self):
-    sections=pcr(middle=''.join(('course/',str(self.id),'/sections')))['values']
+    middle = ''.join(('course/',str(self.id),'/sections'))
+    sections = pcr(middle=middle)['values']
     return [instructor['name'] for section in sections for instructor in section['instructors']]
 
 
